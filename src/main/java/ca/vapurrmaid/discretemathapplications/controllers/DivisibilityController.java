@@ -1,6 +1,5 @@
 package ca.vapurrmaid.discretemathapplications.controllers;
 
-import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 import ca.vapurrmaid.discretemathapplications.services.DivisibilityServiceImpl;
 import lombok.RequiredArgsConstructor;
