@@ -1,6 +1,7 @@
 package ca.vapurrmaid.discretemathapplications.controllers;
 
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
+import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import ca.vapurrmaid.discretemathapplications.services.DivisibilityServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,18 @@ public final class DivisibilityController {
     public ResponseEntity divisibilityTest(@PathVariable("multiple") Integer multiple, @RequestParam("number") Integer number) {
         try {
             NaturalNumber n = new NaturalNumber(number);
-            return new ResponseEntity<>(divisibilityService.isNumberDivisibleByTwo(n), HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getCause().getMessage(), HttpStatus.BAD_REQUEST);
-        }
 
+            switch (multiple) {
+                case 2:
+                    return new ResponseEntity<>(divisibilityService.isNumberDivisibleByTwo(n), HttpStatus.OK);
+                case 3:
+                    return new ResponseEntity<>(divisibilityService.isNumberDivisibleByThree(n), HttpStatus.OK);
+                default:
+                    return new ResponseEntity<>(String.format("supplied multiple %d not supported", multiple), HttpStatus.BAD_REQUEST);
+            }
+        } catch (NaturalNumberException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
+
 }

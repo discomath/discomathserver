@@ -4,6 +4,7 @@ import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Vapurrmaid
@@ -14,16 +15,18 @@ public final class NaturalNumber {
 
     private final Integer number;
 
-    public NaturalNumber(final @NonNull Integer number) {
+    /**
+     * Constructor.
+     *
+     * @param number A positive {@code Integer} greater than zero.
+     * @throws NaturalNumberException
+     */
+    public NaturalNumber(final @NonNull Integer number) throws NaturalNumberException {
         if (number < 1) {
-            throw new IllegalArgumentException(new NaturalNumberException(number));
+            throw new NaturalNumberException(number);
         }
 
         this.number = number;
-    }
-
-    protected NaturalNumber() {
-        this(1);
     }
 
     /**
@@ -34,4 +37,5 @@ public final class NaturalNumber {
     public Integer getNumberAsInteger() {
         return this.number;
     }
+
 }

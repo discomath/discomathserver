@@ -25,23 +25,62 @@ public class DivisibilityServiceImpl implements DivisibilityService {
     @Override
     public Computation isNumberDivisibleByTwo(NaturalNumber n) {
         Computation computation = new Computation(subTopic);
+
+        // obtain last bit
         int lastBit = n.getNumberAsInteger() & 1;
         computation.appendComputationalStep(new ComputationalStep("obtain last digit", String.format("least significant bit of %d = %s", n.getNumberAsInteger(), lastBit)));
+
+        // test last bit for divisibility by 2
         if (lastBit == 1) {
             computation.appendComputationalStep(new ComputationalStep("test last digit multiple of 2", "least signification bit = 1 => false"));
             computation.setResult(new ComputationalResult(false));
         } else {
             computation.appendComputationalStep(new ComputationalStep("test last digit multiple of 2", "least significant bit = 0 => true"));
-            computation.setResult(new ComputationalResult(true, String.format("therefore 2|%s", n.getNumberAsInteger())));
+            computation.setResult(new ComputationalResult(true, String.format("therefore 2|%d", n.getNumberAsInteger())));
         }
+
         return computation;
     }
 
     @Override
     public Computation isNumberDivisibleByThree(NaturalNumber n) {
         Computation computation = new Computation(subTopic);
+        return isNumberDivisibleByThree(n.getNumberAsInteger(), n.getNumberAsInteger(), computation);
+    }
 
-        return computation;
+    private Computation isNumberDivisibleByThree(Integer original, Integer n, Computation computation) {
+        if (n < 10) {
+            if (n == 3 || n == 6 || n == 9) {
+                computation.appendComputationalStep(new ComputationalStep("test final digit", String.format("remaining digit is %d => true", n)));
+                computation.setResult(new ComputationalResult(true, String.format("therefore 3|%d", original)));
+            } else {
+                computation.appendComputationalStep(new ComputationalStep("test final digit", String.format("remaining digit is %d => false", n)));
+                computation.setResult(new ComputationalResult(false));
+            }
+
+            return computation;
+        } else {
+            int digitSum = digitSum(n);
+            computation.appendComputationalStep(new ComputationalStep("compute digit sum", String.format("digit sum of %d = %d", n, digitSum)));
+            return isNumberDivisibleByThree(original, digitSum, computation);
+        }
+    }
+
+    /**
+     * Returns the value of the summation of the digits in the
+     * {@code Natural Number} as an {@code Integer}
+     *
+     * @return sum of each digit
+     */
+    private Integer digitSum(Integer number) {
+        char[] numbers = Integer.toString(number).toCharArray();
+
+        Integer sum = 0;
+        for (char c : numbers) {
+            sum += Character.getNumericValue(c);
+        }
+
+        return sum;
     }
 
     @Override
