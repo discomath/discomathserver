@@ -86,6 +86,25 @@ public class DivisibilityServiceImpl implements DivisibilityService {
     @Override
     public Computation isNumberDivisibleByFour(NaturalNumber n) {
         Computation computation = new Computation(subTopic);
+        char[] numbers = n.getNumberAsInteger().toString().toCharArray();
+        
+        // obtain last two digits
+        int lastTwoDigits;
+        if (numbers.length >= 2) {
+            lastTwoDigits = Integer.parseInt(Character.toString(numbers[numbers.length - 2]) + Character.toString(numbers[numbers.length - 1]));
+        } else {
+            lastTwoDigits = Character.getNumericValue(numbers[0]);
+        }
+        computation.appendComputationalStep(new ComputationalStep("examine last 2 digits", String.format("last 2 digits are %d", lastTwoDigits)));
+        
+        // test if last two digits are a multiple of 4
+        if (lastTwoDigits % 4 == 0) {
+            computation.appendComputationalStep(new ComputationalStep(String.format("test 4|%d", lastTwoDigits), String.format("4|%d => true", lastTwoDigits)));
+            computation.setResult(new ComputationalResult(true, String.format("therefore 4|%d", n.getNumberAsInteger())));
+        } else {
+            computation.appendComputationalStep(new ComputationalStep(String.format("test 4|%d", lastTwoDigits), String.format("4 does not divide %d => false", lastTwoDigits)));
+            computation.setResult(new ComputationalResult(false));
+        }
 
         return computation;
     }
