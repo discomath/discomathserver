@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/applications/divisibility")
+@RequestMapping("/api/applications/divisibility")
 public final class DivisibilityController {
 
     @Autowired
