@@ -73,7 +73,7 @@ public final class ComputationalResult {
      * @return true if and only if a result was successfully computed.
      */
     public Boolean wasSuccessful() {
-        return this.result == null;
+        return this.result != null && this.result != Boolean.FALSE;
     }
 
 }

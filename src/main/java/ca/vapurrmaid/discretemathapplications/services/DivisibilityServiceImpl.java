@@ -87,7 +87,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
     public Computation isNumberDivisibleByFour(NaturalNumber n) {
         Computation computation = new Computation(subTopic);
         char[] numbers = n.getNumberAsInteger().toString().toCharArray();
-        
+
         // obtain last two digits
         int lastTwoDigits;
         if (numbers.length >= 2) {
@@ -96,7 +96,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
             lastTwoDigits = Character.getNumericValue(numbers[0]);
         }
         computation.appendComputationalStep(new ComputationalStep("examine last 2 digits", String.format("last 2 digits are %d", lastTwoDigits)));
-        
+
         // test if last two digits are a multiple of 4
         if (lastTwoDigits % 4 == 0) {
             computation.appendComputationalStep(new ComputationalStep(String.format("test 4|%d", lastTwoDigits), String.format("4|%d => true", lastTwoDigits)));
@@ -112,6 +112,20 @@ public class DivisibilityServiceImpl implements DivisibilityService {
     @Override
     public Computation isNumberDivisibleByFive(NaturalNumber n) {
         Computation computation = new Computation(subTopic);
+        String numberString = n.getNumberAsInteger().toString();
+
+        // obtain last digit
+        int lastDigit = Integer.parseInt(numberString.substring(numberString.length() - 1));
+        computation.appendComputationalStep(new ComputationalStep("obtain last digit", String.format("last digit is %d", lastDigit)));
+
+        // test if last digit is 0 or 5
+        if (lastDigit == 0 || lastDigit == 5) {
+            computation.appendComputationalStep(new ComputationalStep("test last digit is {0, 5}", String.format("last digit is %d => true", lastDigit)));
+            computation.setResult(new ComputationalResult(true, String.format("therefore 5|%d", n.getNumberAsInteger())));
+        } else {
+            computation.appendComputationalStep(new ComputationalStep("test last digit is {0, 5}", String.format("last digit is %d => false", lastDigit)));
+            computation.setResult(new ComputationalResult(false));
+        }
 
         return computation;
     }
@@ -120,6 +134,33 @@ public class DivisibilityServiceImpl implements DivisibilityService {
     public Computation isNumberDivisibleBySix(NaturalNumber n) {
         Computation computation = new Computation(subTopic);
 
+        // test divisibility by 2
+        computation.appendComputationalStep(new ComputationalStep(String.format("test 2|%d", n.getNumberAsInteger()), ""));
+        
+        Computation isDivisibleByTwo = isNumberDivisibleByTwo(n);
+        isDivisibleByTwo.getComputationalSteps().forEach((ComputationalStep step) -> {
+            computation.appendComputationalStep(step);
+        });
+
+        if (isDivisibleByTwo.getResult().wasSuccessful()) {
+            // test divisibility by 3
+            computation.appendComputationalStep(new ComputationalStep(String.format("test 3|%d", n.getNumberAsInteger()), ""));
+            
+            Computation isDivisibleByThree = isNumberDivisibleByThree(n);
+            isDivisibleByThree.getComputationalSteps().forEach((ComputationalStep step) -> {
+                computation.appendComputationalStep(step);
+            });
+
+            if (isDivisibleByThree.getResult().wasSuccessful()) {
+                computation.setResult(new ComputationalResult(true, String.format("therefore 6|%d", n.getNumberAsInteger())));
+            } else {
+                computation.setResult(new ComputationalResult(false));
+            }
+        } else {
+            computation.setResult(new ComputationalResult(false));
+        }
+
+        // test divisibility by 3
         return computation;
     }
 
