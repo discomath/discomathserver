@@ -23,7 +23,6 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                        "http://localhost:8081",
                         "https://discomath.github.io",
                         "https://vapurrmaid.github.io"
                 );
