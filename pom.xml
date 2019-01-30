@@ -11,9 +11,9 @@
     </parent>
     
     <groupId>ca.vapurrmaid</groupId>
-    <artifactId>discrete-math-applications</artifactId>
+    <artifactId>disco-math-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>discrete-math-applications</name>
+    <name>disco-math-server</name>
     <description>Applications of discrete math provided as a web service for educational purposes.</description>
 
     <properties>

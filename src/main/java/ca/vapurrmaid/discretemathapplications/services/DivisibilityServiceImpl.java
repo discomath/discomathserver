@@ -28,14 +28,14 @@ public class DivisibilityServiceImpl implements DivisibilityService {
 
         // obtain last bit
         int lastBit = n.getNumberAsInteger() & 1;
-        computation.appendComputationalStep(new ComputationalStep("obtain last digit", String.format("least significant bit of %d = %s", n.getNumberAsInteger(), lastBit)));
+        computation.appendComputationalStep(new ComputationalStep("obtain the least significant bit", String.format("the least significant bit of %d = %s", n.getNumberAsInteger(), lastBit)));
 
         // test last bit for divisibility by 2
         if (lastBit == 1) {
-            computation.appendComputationalStep(new ComputationalStep("test last digit multiple of 2", "least signification bit = 1 => false"));
+            computation.appendComputationalStep(new ComputationalStep("test if least significant bit is 0", "least signification bit = 1 => false"));
             computation.setResult(new ComputationalResult(false));
         } else {
-            computation.appendComputationalStep(new ComputationalStep("test last digit multiple of 2", "least significant bit = 0 => true"));
+            computation.appendComputationalStep(new ComputationalStep("test if least significant bit is 0", "least significant bit = 0 => true"));
             computation.setResult(new ComputationalResult(true, String.format("therefore 2|%d", n.getNumberAsInteger())));
         }
 
