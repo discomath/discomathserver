@@ -142,7 +142,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
             computation.appendComputationalStep(step);
         });
 
-        if (isDivisibleByTwo.getResult().wasSuccessful()) {
+        if (isDivisibleByTwo.getResult().getResultIsLogicallyTrue()) {
             // test divisibility by 3
             computation.appendComputationalStep(new ComputationalStep(String.format("test 3|%d", n.getNumberAsInteger()), ""));
             
@@ -151,7 +151,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
                 computation.appendComputationalStep(step);
             });
 
-            if (isDivisibleByThree.getResult().wasSuccessful()) {
+            if (isDivisibleByThree.getResult().getResultIsLogicallyTrue()) {
                 computation.setResult(new ComputationalResult(true, String.format("therefore 6|%d", n.getNumberAsInteger())));
             } else {
                 computation.setResult(new ComputationalResult(false));
