@@ -38,4 +38,5 @@ public final class ComputationalStep {
         this.message = message;
         this.equation = equation;
     }
+
 }

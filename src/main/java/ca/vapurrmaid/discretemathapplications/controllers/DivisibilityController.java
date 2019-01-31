@@ -2,7 +2,7 @@ package ca.vapurrmaid.discretemathapplications.controllers;
 
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
-import ca.vapurrmaid.discretemathapplications.services.DivisibilityServiceImpl;
+import ca.vapurrmaid.discretemathapplications.services.DivisibilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public final class DivisibilityController {
 
     @Autowired
-    private final DivisibilityServiceImpl divisibilityService;
+    private final DivisibilityService divisibilityService;
 
     @RequestMapping(
             value = "/{multiple}",

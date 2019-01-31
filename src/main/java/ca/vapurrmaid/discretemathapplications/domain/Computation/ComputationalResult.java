@@ -13,10 +13,10 @@ import lombok.NonNull;
 @Data
 @JsonInclude(Include.NON_NULL)
 public final class ComputationalResult {
-    
+
     @NonNull
     private final String message;
-    
+
     @NonNull
     private final Boolean resultIsLogicallyTrue;
 
