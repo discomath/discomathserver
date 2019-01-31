@@ -4,7 +4,6 @@ import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Vapurrmaid

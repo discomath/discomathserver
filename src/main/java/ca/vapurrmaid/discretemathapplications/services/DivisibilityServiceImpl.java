@@ -3,10 +3,7 @@ package ca.vapurrmaid.discretemathapplications.services;
 import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalResult;
 import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalStep;
-import ca.vapurrmaid.discretemathapplications.domain.MathTopic.SubTopic;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
-import ca.vapurrmaid.discretemathapplications.repository.SubTopicRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,16 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class DivisibilityServiceImpl implements DivisibilityService {
 
-    private final SubTopic subTopic;
-
-    @Autowired
-    public DivisibilityServiceImpl(final SubTopicRepository subTopicRepository) {
-        subTopic = subTopicRepository.findByName("divisibility").get();
-    }
-
     @Override
     public Computation isNumberDivisibleByTwo(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         // obtain last bit
         int lastBit = n.getNumberAsInteger() & 1;
@@ -44,7 +34,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
 
     @Override
     public Computation isNumberDivisibleByThree(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
         return isNumberDivisibleByThree(n.getNumberAsInteger(), n.getNumberAsInteger(), computation);
     }
 
@@ -85,7 +75,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
 
     @Override
     public Computation isNumberDivisibleByFour(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
         char[] numbers = n.getNumberAsInteger().toString().toCharArray();
 
         // obtain last two digits
@@ -111,7 +101,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
 
     @Override
     public Computation isNumberDivisibleByFive(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
         String numberString = n.getNumberAsInteger().toString();
 
         // obtain last digit
@@ -132,26 +122,26 @@ public class DivisibilityServiceImpl implements DivisibilityService {
 
     @Override
     public Computation isNumberDivisibleBySix(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         // test divisibility by 2
         computation.appendComputationalStep(new ComputationalStep(String.format("test 2|%d", n.getNumberAsInteger()), ""));
-        
+
         Computation isDivisibleByTwo = isNumberDivisibleByTwo(n);
         isDivisibleByTwo.getComputationalSteps().forEach((ComputationalStep step) -> {
             computation.appendComputationalStep(step);
         });
 
-        if (isDivisibleByTwo.getResult().wasSuccessful()) {
+        if (isDivisibleByTwo.getResult().getResultIsLogicallyTrue()) {
             // test divisibility by 3
             computation.appendComputationalStep(new ComputationalStep(String.format("test 3|%d", n.getNumberAsInteger()), ""));
-            
+
             Computation isDivisibleByThree = isNumberDivisibleByThree(n);
             isDivisibleByThree.getComputationalSteps().forEach((ComputationalStep step) -> {
                 computation.appendComputationalStep(step);
             });
 
-            if (isDivisibleByThree.getResult().wasSuccessful()) {
+            if (isDivisibleByThree.getResult().getResultIsLogicallyTrue()) {
                 computation.setResult(new ComputationalResult(true, String.format("therefore 6|%d", n.getNumberAsInteger())));
             } else {
                 computation.setResult(new ComputationalResult(false));
@@ -166,42 +156,42 @@ public class DivisibilityServiceImpl implements DivisibilityService {
 
     @Override
     public Computation isNumberDivisibleBySeven(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         return computation;
     }
 
     @Override
     public Computation isNumberDivisibleByEight(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         return computation;
     }
 
     @Override
     public Computation isNumberDivisibleByNine(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         return computation;
     }
 
     @Override
     public Computation isNumberDivisibleByTen(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         return computation;
     }
 
     @Override
     public Computation isNumberDivisibleByEleven(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         return computation;
     }
 
     @Override
     public Computation isNumberDivisibleByTwelve(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         return computation;
     }

@@ -1,10 +1,8 @@
 package ca.vapurrmaid.discretemathapplications.domain.Computation;
 
-import ca.vapurrmaid.discretemathapplications.domain.MathTopic.SubTopic;
 import java.util.LinkedList;
 import java.util.List;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -14,14 +12,6 @@ import lombok.Setter;
  * @author vapurrmaid
  */
 public class Computation {
-
-    /**
-     * A mathematical {@link SubTopic}
-     *
-     * @return Categorical {@link SubTopic} of this computation.
-     */
-    @Getter
-    private final SubTopic subTopic;
 
     /**
      * @return Ordered List of atomic steps for this computation.
@@ -38,15 +28,6 @@ public class Computation {
     @Getter
     @Setter
     private ComputationalResult result;
-
-    /**
-     * Constructor.
-     *
-     * @param subTopic {@link SubTopic} of this computation.
-     */
-    public Computation(final @NonNull SubTopic subTopic) {
-        this.subTopic = subTopic;
-    }
 
     /**
      * Append an atomic step to the sequence of steps carried out for this
