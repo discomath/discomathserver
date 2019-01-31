@@ -3,10 +3,7 @@ package ca.vapurrmaid.discretemathapplications.services;
 import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalResult;
 import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalStep;
-import ca.vapurrmaid.discretemathapplications.domain.MathTopic.SubTopic;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
-import ca.vapurrmaid.discretemathapplications.repository.SubTopicRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,16 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class PrimeServiceImpl implements PrimeService {
 
-    private final SubTopic subTopic;
-
-    @Autowired
-    public PrimeServiceImpl(final SubTopicRepository subTopicRepository) {
-        subTopic = subTopicRepository.findByName("prime numbers").get();
-    }
-
     @Override
     public Computation isNaturalNumberPrime(NaturalNumber n) {
-        Computation computation = new Computation(subTopic);
+        Computation computation = new Computation();
 
         Integer number = n.getNumberAsInteger();
 
@@ -39,7 +29,7 @@ public class PrimeServiceImpl implements PrimeService {
 
         // 0 decimal means the sqrt came out as a natural number
         if ("0".equals(numberParts[1])) {
-            computation.setResult(new ComputationalResult(String.format("%d is a square number => not prime", number)));
+            computation.setResult(new ComputationalResult(false, String.format("%d is a square number => not prime", number)));
         } else {
 
             // try every number from 2 -> sqrt(n)
@@ -49,7 +39,7 @@ public class PrimeServiceImpl implements PrimeService {
                     computation.appendComputationalStep(new ComputationalStep(String.format("try %d|%d", i, number), String.format("%d does not divide %d", i, number)));
                 } else {
                     computation.appendComputationalStep(new ComputationalStep(String.format("try %d|%d", i, number), String.format("%d divides %d", i, number)));
-                    computation.setResult(new ComputationalResult(false));
+                    computation.setResult(new ComputationalResult(false, String.format("%d is a composite number", number)));
                     break;
                 }
             }

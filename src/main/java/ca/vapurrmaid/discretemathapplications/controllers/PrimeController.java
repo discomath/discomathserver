@@ -2,9 +2,7 @@ package ca.vapurrmaid.discretemathapplications.controllers;
 
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
-import ca.vapurrmaid.discretemathapplications.services.PrimeServiceImpl;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import ca.vapurrmaid.discretemathapplications.services.PrimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PrimeController {
     
     @Autowired
-    PrimeServiceImpl primeService;
+    PrimeService primeService;
     
     @RequestMapping(
             value = "/test",
