@@ -155,13 +155,6 @@ public class DivisibilityServiceImpl implements DivisibilityService {
     }
 
     @Override
-    public Computation isNumberDivisibleBySeven(NaturalNumber n) {
-        Computation computation = new Computation();
-
-        return computation;
-    }
-
-    @Override
     public Computation isNumberDivisibleByEight(NaturalNumber n) {
         Computation computation = new Computation();
 

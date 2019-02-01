@@ -34,7 +34,28 @@ public final class NaturalNumber {
      * @return {@code Integer} representation.
      */
     public Integer getNumberAsInteger() {
-        return this.number;
+        return number;
+    }
+
+    public Integer getLastXDigits(int x) {
+        char[] numbers = getNumberAsInteger().toString().toCharArray();
+        
+        // if requesting more digits than the number has, just return
+        // the number (note, this is NOT padded with extra zeroes
+        if (x >= numbers.length) {
+            return getNumberAsInteger();
+        } else if (x <= 0) {
+            return null;
+        }
+
+        // otherwise walk array of digits from the back
+        String result = "";
+        do {
+            result = result + numbers[numbers.length - (1 * x)];
+            x--;
+        } while (x > 0);
+
+        return Integer.parseInt(result);
     }
 
 }

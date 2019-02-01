@@ -57,15 +57,6 @@ public interface DivisibilityService {
 
     /**
      * Demonstrates a computation for deciding if the given number is a multiple
-     * of 7.
-     *
-     * @param n A {@link NaturalNumber} is a positive Integer greater than 0.
-     * @return A {@link Computation} object demonstrating the divisibility test.
-     */
-    Computation isNumberDivisibleBySeven(NaturalNumber n);
-
-    /**
-     * Demonstrates a computation for deciding if the given number is a multiple
      * of 8.
      *
      * @param n A {@link NaturalNumber} is a positive Integer greater than 0.
