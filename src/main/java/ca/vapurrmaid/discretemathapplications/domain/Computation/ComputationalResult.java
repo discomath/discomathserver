@@ -17,8 +17,7 @@ public final class ComputationalResult {
     @NonNull
     private final String message;
 
-    @NonNull
-    private final Boolean resultIsLogicallyTrue;
+    private final boolean resultIsLogicallyTrue;
 
     /**
      * Constructor.
@@ -26,7 +25,7 @@ public final class ComputationalResult {
      * @param resultIsLogicallyTrue Indicates if the result of the computation
      * is logically consistent with what the operation asks.
      */
-    public ComputationalResult(final Boolean resultIsLogicallyTrue) {
+    public ComputationalResult(final boolean resultIsLogicallyTrue) {
         this.message = "";
         this.resultIsLogicallyTrue = resultIsLogicallyTrue;
     }
@@ -38,7 +37,7 @@ public final class ComputationalResult {
      * is logically consistent with what the operation asks.
      * @param message The computed result itself or a description
      */
-    public ComputationalResult(final Boolean resultIsLogicallyTrue, final String message) {
+    public ComputationalResult(final boolean resultIsLogicallyTrue, final String message) {
         this.message = message;
         this.resultIsLogicallyTrue = resultIsLogicallyTrue;
     }

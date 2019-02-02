@@ -125,7 +125,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
             computation.appendComputationalStep(step);
         });
 
-        if (isDivisibleByTwo.getResult().getResultIsLogicallyTrue()) {
+        if (isDivisibleByTwo.getResult().isResultIsLogicallyTrue()) {
             // test divisibility by 3
             computation.appendComputationalStep(new ComputationalStep(String.format("test 3|%d", n.getNumberAsInteger()), ""));
 
@@ -134,7 +134,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
                 computation.appendComputationalStep(step);
             });
 
-            if (isDivisibleByThree.getResult().getResultIsLogicallyTrue()) {
+            if (isDivisibleByThree.getResult().isResultIsLogicallyTrue()) {
                 // number is divisible by 2 and 3
                 computation.setResult(new ComputationalResult(true, String.format("therefore 6|%d", n.getNumberAsInteger())));
             } else {
@@ -196,10 +196,10 @@ public class DivisibilityServiceImpl implements DivisibilityService {
     @Override
     public Computation isNumberDivisibleByTen(NaturalNumber n) {
         Computation computation = new Computation();
-        
+
         // obtain last digit
         int lastDigit = n.getLastXDigits(1);
-        
+
         // is the last digit 0 ?
         if (lastDigit == 0) {
             computation.appendComputationalStep(new ComputationalStep("examine last digit", "last digit is 0 => true"));
@@ -208,7 +208,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
             computation.appendComputationalStep(new ComputationalStep("examine last digit", "last digit is not 0 => false"));
             computation.setResult(new ComputationalResult(false));
         }
- 
+
         return computation;
     }
 
@@ -224,7 +224,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
             computation.appendComputationalStep(step);
         });
 
-        if (isDivisibleBy3.getResult().getResultIsLogicallyTrue()) {
+        if (isDivisibleBy3.getResult().isResultIsLogicallyTrue()) {
             // test divisibility by 4
             computation.appendComputationalStep(new ComputationalStep(String.format("test 4|%d", n.getNumberAsInteger()), ""));
 
@@ -233,7 +233,7 @@ public class DivisibilityServiceImpl implements DivisibilityService {
                 computation.appendComputationalStep(step);
             });
 
-            if (isDivisibleBy4.getResult().getResultIsLogicallyTrue()) {
+            if (isDivisibleBy4.getResult().isResultIsLogicallyTrue()) {
                 // number is divisible by 3 and 4
                 computation.setResult(new ComputationalResult(true, String.format("therefore 12|%d", n.getNumberAsInteger())));
             } else {

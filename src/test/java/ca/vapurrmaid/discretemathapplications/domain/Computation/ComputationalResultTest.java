@@ -31,11 +31,11 @@ public class ComputationalResultTest {
     }
 
     @Test
-    public void testGetResultIsLogicallyTrue() {
-        assertEquals(false, falseNoMessage.getResultIsLogicallyTrue());
-        assertEquals(false, falseMessage.getResultIsLogicallyTrue());
-        assertEquals(true, trueNoMessage.getResultIsLogicallyTrue());
-        assertEquals(true, trueMessage.getResultIsLogicallyTrue());
+    public void testIsLogicallyTrue() {
+        assertEquals(false, falseNoMessage.isResultIsLogicallyTrue());
+        assertEquals(false, falseMessage.isResultIsLogicallyTrue());
+        assertEquals(true, trueNoMessage.isResultIsLogicallyTrue());
+        assertEquals(true, trueMessage.isResultIsLogicallyTrue());
     }
 
 }
