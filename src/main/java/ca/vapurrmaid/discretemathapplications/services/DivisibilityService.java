@@ -1,6 +1,6 @@
 package ca.vapurrmaid.discretemathapplications.services;
 
-import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
+import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 
 /**

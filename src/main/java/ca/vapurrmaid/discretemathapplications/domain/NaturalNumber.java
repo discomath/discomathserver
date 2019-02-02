@@ -39,7 +39,7 @@ public final class NaturalNumber {
 
     public Integer getLastXDigits(int x) {
         char[] numbers = getNumberAsInteger().toString().toCharArray();
-        
+
         // if requesting more digits than the number has, just return
         // the number (note, this is NOT padded with extra zeroes
         if (x >= numbers.length) {

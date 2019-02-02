@@ -47,15 +47,15 @@ public class NaturalNumberTest {
     @Test
     public void testGetLastXDigits() throws NaturalNumberException {
         NaturalNumber n = new NaturalNumber(1234);
-        
+
         // basic case
         assertEquals(Integer.valueOf(4), n.getLastXDigits(1));
         assertEquals(Integer.valueOf(34), n.getLastXDigits(2));
         assertEquals(Integer.valueOf(234), n.getLastXDigits(3));
-        
+
         // requesting more digits
         assertEquals(Integer.valueOf(1234), n.getLastXDigits(100));
-        
+
         // requesting 0 or negative digits
         assertEquals(null, n.getLastXDigits(0));
     }

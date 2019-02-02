@@ -1,5 +1,6 @@
 package ca.vapurrmaid.discretemathapplications.domain.Computation;
 
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalResult;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;

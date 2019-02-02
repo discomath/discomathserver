@@ -1,8 +1,8 @@
 package ca.vapurrmaid.discretemathapplications.services;
 
-import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
-import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalResult;
-import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalStep;
+import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalResult;
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import java.util.logging.Level;

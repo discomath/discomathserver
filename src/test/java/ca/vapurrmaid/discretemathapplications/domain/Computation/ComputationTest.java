@@ -1,5 +1,8 @@
 package ca.vapurrmaid.discretemathapplications.domain.Computation;
 
+import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalResult;
 import java.util.stream.IntStream;
 import org.junit.Test;
 import org.junit.Before;

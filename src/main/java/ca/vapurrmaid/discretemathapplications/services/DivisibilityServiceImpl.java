@@ -1,8 +1,8 @@
 package ca.vapurrmaid.discretemathapplications.services;
 
-import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
-import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalResult;
-import ca.vapurrmaid.discretemathapplications.domain.Computation.ComputationalStep;
+import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalResult;
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 import org.springframework.stereotype.Service;
 
@@ -121,18 +121,14 @@ public class DivisibilityServiceImpl implements DivisibilityService {
         computation.appendComputationalStep(new ComputationalStep(String.format("test 2|%d", n.getNumberAsInteger()), ""));
 
         Computation isDivisibleByTwo = isNumberDivisibleByTwo(n);
-        isDivisibleByTwo.getComputationalSteps().forEach((ComputationalStep step) -> {
-            computation.appendComputationalStep(step);
-        });
+        isDivisibleByTwo.getComputationalSteps().forEach(computation::appendComputationalStep);
 
         if (isDivisibleByTwo.getResult().isResultIsLogicallyTrue()) {
             // test divisibility by 3
             computation.appendComputationalStep(new ComputationalStep(String.format("test 3|%d", n.getNumberAsInteger()), ""));
 
             Computation isDivisibleByThree = isNumberDivisibleByThree(n);
-            isDivisibleByThree.getComputationalSteps().forEach((ComputationalStep step) -> {
-                computation.appendComputationalStep(step);
-            });
+            isDivisibleByThree.getComputationalSteps().forEach(computation::appendComputationalStep);
 
             if (isDivisibleByThree.getResult().isResultIsLogicallyTrue()) {
                 // number is divisible by 2 and 3

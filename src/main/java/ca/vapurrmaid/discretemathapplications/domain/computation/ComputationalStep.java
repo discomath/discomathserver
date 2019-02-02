@@ -1,4 +1,4 @@
-package ca.vapurrmaid.discretemathapplications.domain.Computation;
+package ca.vapurrmaid.discretemathapplications.domain.computation;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

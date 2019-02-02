@@ -1,4 +1,4 @@
-package ca.vapurrmaid.discretemathapplications.domain.Computation;
+package ca.vapurrmaid.discretemathapplications.domain.computation;
 
 import java.util.LinkedList;
 import java.util.List;

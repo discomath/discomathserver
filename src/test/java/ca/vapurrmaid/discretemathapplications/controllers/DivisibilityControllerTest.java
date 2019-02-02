@@ -1,6 +1,6 @@
 package ca.vapurrmaid.discretemathapplications.controllers;
 
-import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
+import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import ca.vapurrmaid.discretemathapplications.services.DivisibilityService;

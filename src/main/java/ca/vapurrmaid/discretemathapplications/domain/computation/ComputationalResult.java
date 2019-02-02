@@ -1,4 +1,4 @@
-package ca.vapurrmaid.discretemathapplications.domain.Computation;
+package ca.vapurrmaid.discretemathapplications.domain.computation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

@@ -1,5 +1,6 @@
 package ca.vapurrmaid.discretemathapplications.domain.Computation;
 
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -8,9 +9,9 @@ import org.junit.Before;
  * @author vapurrmaid
  */
 public class ComputationalStepTest {
-    
+
     private ComputationalStep cs;
-    
+
     @Before
     public void setup() {
         cs = new ComputationalStep("message", "equation");
@@ -23,7 +24,7 @@ public class ComputationalStepTest {
 
     @Test
     public void testGetEquation() {
-       assertEquals("equation", cs.getEquation());
+        assertEquals("equation", cs.getEquation());
     }
-    
+
 }
