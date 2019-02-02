@@ -84,15 +84,6 @@ public interface DivisibilityService {
 
     /**
      * Demonstrates a computation for deciding if the given number is a multiple
-     * of 11.
-     *
-     * @param n A {@link NaturalNumber} is a positive Integer greater than 0.
-     * @return A {@link Computation} object demonstrating the divisibility test.
-     */
-    Computation isNumberDivisibleByEleven(NaturalNumber n);
-
-    /**
-     * Demonstrates a computation for deciding if the given number is a multiple
      * of 12.
      *
      * @param n A {@link NaturalNumber} is a positive Integer greater than 0.
