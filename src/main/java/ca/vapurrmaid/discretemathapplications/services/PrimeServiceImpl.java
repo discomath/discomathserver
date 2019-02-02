@@ -18,9 +18,9 @@ public class PrimeServiceImpl implements PrimeService {
 
         // start with the assumption of primeness, and look to disprove
         Computation computation = new Computation();
-        computation.setResult(new ComputationalResult(true, String.format("therefore %d is prime", number)));
+        computation.setResult(new ComputationalResult(true, String.format("%d is prime", number)));
 
-        // quick return for cases of 2 or 3
+        // quick return for cases of 2 or 3, since the main loop starts at 3
         if (number == 2 || number == 3) {
             return computation;
         }
@@ -29,6 +29,7 @@ public class PrimeServiceImpl implements PrimeService {
         computation.appendComputationalStep(new ComputationalStep("Check if number is even", ""));
         if (number % 2 == 0) {
             computation.setResult(new ComputationalResult(false, String.format("2|%d => not prime", number)));
+            return computation;
         }
 
         // split sqrt on decimal
