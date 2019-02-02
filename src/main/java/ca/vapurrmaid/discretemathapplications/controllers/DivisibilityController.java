@@ -47,6 +47,14 @@ public final class DivisibilityController {
                     return new ResponseEntity<>(divisibilityService.isNumberDivisibleByFive(n), HttpStatus.OK);
                 case 6:
                     return new ResponseEntity<>(divisibilityService.isNumberDivisibleBySix(n), HttpStatus.OK);
+                case 8:
+                    return new ResponseEntity<>(divisibilityService.isNumberDivisibleByEight(n), HttpStatus.OK);
+                case 9:
+                    return new ResponseEntity<>(divisibilityService.isNumberDivisibleByNine(n), HttpStatus.OK);
+                case 10:
+                    return new ResponseEntity<>(divisibilityService.isNumberDivisibleByTen(n), HttpStatus.OK);
+                case 12:
+                    return new ResponseEntity<>(divisibilityService.isNumberDivisibleByTwelve(n), HttpStatus.OK);
                 default:
                     return new ResponseEntity<>(String.format("supplied multiple %d not supported", multiple), HttpStatus.BAD_REQUEST);
             }

@@ -58,8 +58,19 @@ public class DivisibilityControllerTest {
                 .willReturn(c);
         given(divisibilityService.isNumberDivisibleBySix(n))
                 .willReturn(c);
+        given(divisibilityService.isNumberDivisibleByEight(n))
+                .willReturn(c);
+        given(divisibilityService.isNumberDivisibleByNine(n))
+                .willReturn(c);
+        given(divisibilityService.isNumberDivisibleByTen(n))
+                .willReturn(c);
+        given(divisibilityService.isNumberDivisibleByTwelve(n))
+                .willReturn(c);
 
-        for (int i = 2; i < 7; i++) {
+        for (int i = 2; i <= 12; i++) {
+            if (i == 7 || i == 11) {
+                continue;
+            }
             testDivisibilityTest(Integer.toString(i), "2", c);
         }
 

@@ -1,9 +1,12 @@
 package ca.vapurrmaid.discretemathapplications.services;
 
+import ca.vapurrmaid.discretemathapplications.domain.Computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
-import org.junit.Test;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import org.junit.Before;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,28 +15,25 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class DivisibilityServiceImplTest {
 
-    private DivisibilityServiceImpl divisibilityService;
+    private DivisibilityService divisibilityService;
 
     @Before
     public void setup() {
         divisibilityService = new DivisibilityServiceImpl();
     }
 
-    @Test
-    public void testIsNumberDivisibleByTwo() throws NaturalNumberException {
+    private void testIsNumberDivisibleByX(int x, Method method) throws NaturalNumberException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         for (int i = 1; i < 10_000; i++) {
             NaturalNumber n = new NaturalNumber(i);
-            if (i % 2 == 0) {
+            if (i % x == 0) {
                 assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByTwo(n)
+                        ((Computation) method.invoke(divisibilityService, n))
                                 .getResult()
                                 .getResultIsLogicallyTrue())
                         .isTrue();
             } else {
                 assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByTwo(n)
+                        ((Computation) method.invoke(divisibilityService, n))
                                 .getResult()
                                 .getResultIsLogicallyTrue())
                         .isFalse();
@@ -42,120 +42,65 @@ public class DivisibilityServiceImplTest {
     }
 
     @Test
-    public void testIsNumberDivisibleByThree() throws NaturalNumberException {
-        for (int i = 1; i < 10_000; i++) {
-            NaturalNumber n = new NaturalNumber(i);
-            if (i % 3 == 0) {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByThree(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isTrue();
-            } else {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByThree(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isFalse();
-            }
-        }
+    public void testIsNumberDivisibleByTwo() throws NaturalNumberException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByTwo", parameterTypes);
+        testIsNumberDivisibleByX(2, m);
     }
 
     @Test
-    public void testIsNumberDivisibleByFour() throws NaturalNumberException {
-        for (int i = 1; i < 10_000; i++) {
-            NaturalNumber n = new NaturalNumber(i);
-            if (i % 4 == 0) {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByFour(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isTrue();
-            } else {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByFour(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isFalse();
-            }
-        }
+    public void testIsNumberDivisibleByThree() throws NaturalNumberException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByThree", parameterTypes);
+        testIsNumberDivisibleByX(3, m);
     }
 
     @Test
-    public void testIsNumberDivisibleByFive() throws NaturalNumberException {
-        for (int i = 1; i < 10_000; i++) {
-            NaturalNumber n = new NaturalNumber(i);
-            if (i % 5 == 0) {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByFive(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isTrue();
-            } else {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleByFive(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isFalse();
-            }
-        }
+    public void testIsNumberDivisibleByFour() throws NaturalNumberException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByFour", parameterTypes);
+        testIsNumberDivisibleByX(4, m);
     }
 
     @Test
-    public void testIsNumberDivisibleBySix() throws NaturalNumberException {
-        for (int i = 1; i < 10_000; i++) {
-            NaturalNumber n = new NaturalNumber(i);
-            if (i % 6 == 0) {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleBySix(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isTrue();
-            } else {
-                assertThat(
-                        divisibilityService
-                                .isNumberDivisibleBySix(n)
-                                .getResult()
-                                .getResultIsLogicallyTrue())
-                        .isFalse();
-            }
-        }
+    public void testIsNumberDivisibleByFive() throws NaturalNumberException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByFive", parameterTypes);
+        testIsNumberDivisibleByX(5, m);
     }
 
-//    @Test
-//    public void testIsNumberDivisibleBySeven() {
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testIsNumberDivisibleByEight() {
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testIsNumberDivisibleByNine() {
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testIsNumberDivisibleByTen() {
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testIsNumberDivisibleByEleven() {
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testIsNumberDivisibleByTwelve() {
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testIsNumberDivisibleBySix() throws NaturalNumberException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleBySix", parameterTypes);
+        testIsNumberDivisibleByX(6, m);
+    }
+
+    @Test
+    public void testIsNumberDivisibleByEight() throws NoSuchMethodException, NaturalNumberException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByEight", parameterTypes);
+        testIsNumberDivisibleByX(8, m);
+    }
+
+    @Test
+    public void testIsNumberDivisibleByNine() throws NoSuchMethodException, NaturalNumberException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByNine", parameterTypes);
+        testIsNumberDivisibleByX(9, m);
+    }
+
+    @Test
+    public void testIsNumberDivisibleByTen() throws NoSuchMethodException, NaturalNumberException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByTen", parameterTypes);
+        testIsNumberDivisibleByX(10, m);
+    }
+
+    @Test
+    public void testIsNumberDivisibleByTwelve() throws NoSuchMethodException, NaturalNumberException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Class[] parameterTypes = {NaturalNumber.class};
+        Method m = DivisibilityServiceImpl.class.getMethod("isNumberDivisibleByTwelve", parameterTypes);
+        testIsNumberDivisibleByX(12, m);
+    }
 }
