@@ -60,9 +60,9 @@ public class PrimeServiceImplTest {
         assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(1)).getResult().getMessage()).isEqualTo("1");
 
         // test 2, 3, 5 and multiples
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(6)).getResult().getMessage()).isEqualTo("6 = 2,3");
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(30)).getResult().getMessage()).isEqualTo("30 = 2,3,5");
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(180)).getResult().getMessage()).isEqualTo("180 = 2,2,3,3,5");
+        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(6)).getResult().getMessage()).isEqualTo("6 = 2\u22c53");
+        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(30)).getResult().getMessage()).isEqualTo("30 = 2\u22c53\u22c55");
+        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(180)).getResult().getMessage()).isEqualTo("180 = 2\u22c52\u22c53\u22c53\u22c55");
 
         // test primes yield themselves
         for (int p : first100Primes) {

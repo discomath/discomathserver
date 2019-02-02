@@ -94,16 +94,20 @@ public class PrimeServiceImpl implements PrimeService {
 
         String factorization = "";
 
-        int prime = 2;
-
         // start from n, and divide by primes until you get a prime
+        computation.appendComputationalStep(new ComputationalStep(String.format("divide %d by primes until the remainder is prime", n.getNumberAsInteger()), ""));
+
+        int prime = 2;
         while (!isNaturalNumberPrime(n).getResult().isResultIsLogicallyTrue()) {
+            computation.appendComputationalStep(new ComputationalStep(String.format("%d is not prime", n.getNumberAsInteger()), String.format("try %d|%d", prime, n.getNumberAsInteger())));
 
             // for each prime, collect # of times prime|n
             while (n.getNumberAsInteger() % prime == 0 && n.getNumberAsInteger() != prime) {
-                factorization = factorization + prime + ",";
+                factorization = factorization + prime + "\u22C5";
                 try {
+                    int prev = n.getNumberAsInteger();
                     n = new NaturalNumber(n.getNumberAsInteger() / prime);
+                    computation.appendComputationalStep(new ComputationalStep(String.format("%d|%d", prime, prev), String.format("%d = %s%d", prev, factorization, n.getNumberAsInteger())));
                 } catch (NaturalNumberException ex) {
                     Logger.getLogger(PrimeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -114,6 +118,7 @@ public class PrimeServiceImpl implements PrimeService {
 
         // add remaining prime
         factorization += n.getNumberAsInteger();
+        computation.appendComputationalStep(new ComputationalStep("remainder is prime, stop", ""));
 
         computation.setResult(new ComputationalResult(true, String.format("%d = %s", original, factorization)));
         return computation;
