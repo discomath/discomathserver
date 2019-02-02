@@ -14,12 +14,22 @@ public class PrimeServiceImpl implements PrimeService {
 
     @Override
     public Computation isNaturalNumberPrime(NaturalNumber n) {
-        Computation computation = new Computation();
-
         Integer number = n.getNumberAsInteger();
 
         // start with the assumption of primeness, and look to disprove
+        Computation computation = new Computation();
         computation.setResult(new ComputationalResult(true, String.format("therefore %d is prime", number)));
+
+        // quick return for cases of 2 or 3
+        if (number == 2 || number == 3) {
+            return computation;
+        }
+
+        // check if multiple of 2
+        computation.appendComputationalStep(new ComputationalStep("Check if number is even", ""));
+        if (number % 2 == 0) {
+            computation.setResult(new ComputationalResult(false, String.format("2|%d => not prime", number)));
+        }
 
         // split sqrt on decimal
         double sqrt = Math.sqrt(number);
@@ -31,10 +41,11 @@ public class PrimeServiceImpl implements PrimeService {
         if ("0".equals(numberParts[1])) {
             computation.setResult(new ComputationalResult(false, String.format("%d is a square number => not prime", number)));
         } else {
+            // try every number from 3 -> sqrt(n)
+            computation.appendComputationalStep(new ComputationalStep(String.format("try dividing all odd numbers from 3 to sqrt(%d)", number), ""));
 
-            // try every number from 2 -> sqrt(n)
-            computation.appendComputationalStep(new ComputationalStep(String.format("try dividing all numbers from 2 to sqrt(%d)", number), ""));
-            for (int i = 2; i <= Integer.parseInt(numberParts[0]); i++) {
+            int i = 3;
+            do {
                 if ((number % i) != 0) {
                     computation.appendComputationalStep(new ComputationalStep(String.format("try %d|%d", i, number), String.format("%d does not divide %d", i, number)));
                 } else {
@@ -42,7 +53,8 @@ public class PrimeServiceImpl implements PrimeService {
                     computation.setResult(new ComputationalResult(false, String.format("%d is a composite number", number)));
                     break;
                 }
-            }
+                i += 2;
+            } while (i <= Integer.parseInt(numberParts[0]));
         }
 
         return computation;
