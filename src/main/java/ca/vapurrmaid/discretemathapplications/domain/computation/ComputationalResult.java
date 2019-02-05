@@ -12,7 +12,7 @@ import lombok.NonNull;
  */
 @Data
 @JsonInclude(Include.NON_NULL)
-public final class ComputationalResult {
+public class ComputationalResult {
 
     @NonNull
     private final String message;
