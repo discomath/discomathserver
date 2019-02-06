@@ -33,7 +33,10 @@ public class PrimeFactorizationResult extends ComputationalResult {
      * @return tally of prime factors
      */
     public HashMap<Integer, Integer> getFactors() {
+        // holds a tally of each prime factor
         HashMap<Integer, Integer> factors = new HashMap<>();
+        
+        // getMessage() is in the form:     number = factor \u22C5 factor ...
         String stringFactors = getMessage().split("=")[1].trim();
         stringFactors = stringFactors.replace("\u22C5", "");
         stringFactors = stringFactors.replace(" ", "");
