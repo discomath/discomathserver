@@ -29,13 +29,13 @@ public class DivisibilityServiceImplTest {
                 assertThat(
                         ((Computation) method.invoke(divisibilityService, n))
                                 .getResult()
-                                .isResultIsLogicallyTrue())
+                                .getResultIsLogicallyTrue())
                         .isTrue();
             } else {
                 assertThat(
                         ((Computation) method.invoke(divisibilityService, n))
                                 .getResult()
-                                .isResultIsLogicallyTrue())
+                                .getResultIsLogicallyTrue())
                         .isFalse();
             }
         }

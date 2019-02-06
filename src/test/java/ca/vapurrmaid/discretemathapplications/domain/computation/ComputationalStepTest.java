@@ -1,9 +1,9 @@
-package ca.vapurrmaid.discretemathapplications.domain.Computation;
+package ca.vapurrmaid.discretemathapplications.domain.computation;
 
-import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
+
+import static org.junit.Assert.*;
 
 /**
  * @author vapurrmaid
