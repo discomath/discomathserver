@@ -1,6 +1,7 @@
 package ca.vapurrmaid.discretemathapplications.services;
 
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
+import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalResult;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,14 +42,14 @@ public class PrimeServiceImplTest {
                         primeService
                                 .isNaturalNumberPrime(n)
                                 .getResult()
-                                .isResultIsLogicallyTrue())
+                                .getResultIsLogicallyTrue())
                         .isTrue();
             } else {
                 assertThat(
                         primeService
                                 .isNaturalNumberPrime(n)
                                 .getResult()
-                                .isResultIsLogicallyTrue())
+                                .getResultIsLogicallyTrue())
                         .isFalse();
             }
         }
@@ -57,16 +58,23 @@ public class PrimeServiceImplTest {
     @Test
     public void testPrimeFactorsOfNaturalNumber() throws NaturalNumberException {
         // test edge case - 1
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(1)).getResult().getMessage()).isEqualTo("1");
+        ComputationalResult res = primeService.primeFactorsOfNaturalNumber(new NaturalNumber(1)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 1 = 1");
 
-        // test 2, 3, 5 and multiples
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(6)).getResult().getMessage()).isEqualTo("6 = 2\u22c53");
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(30)).getResult().getMessage()).isEqualTo("30 = 2\u22c53\u22c55");
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(180)).getResult().getMessage()).isEqualTo("180 = 2\u22c52\u22c53\u22c53\u22c55");
+        // basic case - 2 different factors
+        res = primeService.primeFactorsOfNaturalNumber(new NaturalNumber(6)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 6 = 2\u22C53");
+
+        // advanced case - 3 different factors, one repeating, one with multiple digits
+        res = primeService.primeFactorsOfNaturalNumber(new NaturalNumber(220)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 220 = 2\u22c52\u22c55\u22c511");
 
         // test primes yield themselves
         for (int p : first100Primes) {
-            assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(p)).getResult().getMessage()).isEqualTo(p + " = " + p);
+            assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(p)).getResult().getMessage()).isEqualTo("\u2234 " + p + " = " + p);
         }
 
         // finally, test first 10_000 integers do not cause an infinite loop

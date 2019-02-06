@@ -1,9 +1,10 @@
 package ca.vapurrmaid.discretemathapplications.services;
 
 import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
-import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalResult;
 import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
+import ca.vapurrmaid.discretemathapplications.domain.computation.PrimeFactorizationResult;
+import ca.vapurrmaid.discretemathapplications.domain.computation.PrimeTestResult;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ public class PrimeServiceImpl implements PrimeService {
 
         // start with the assumption of primeness, and look to disprove
         Computation computation = new Computation();
-        computation.setResult(new ComputationalResult(true, String.format("%d is prime", number)));
+        computation.setResult(new PrimeTestResult(true, number));
 
         // quick return for cases of 2 or 3, since the main loop starts at 3
         if (number == 2 || number == 3) {
@@ -31,7 +32,7 @@ public class PrimeServiceImpl implements PrimeService {
         // check if multiple of 2
         computation.appendComputationalStep(new ComputationalStep("Check if number is even", ""));
         if (number % 2 == 0) {
-            computation.setResult(new ComputationalResult(false, String.format("2|%d => not prime", number)));
+            computation.setResult(new PrimeTestResult(false, number));
             return computation;
         }
 
@@ -43,7 +44,7 @@ public class PrimeServiceImpl implements PrimeService {
 
         // 0 decimal means the sqrt came out as a natural number
         if ("0".equals(numberParts[1])) {
-            computation.setResult(new ComputationalResult(false, String.format("%d is a square number => not prime", number)));
+            computation.setResult(new PrimeTestResult(false, number));
         } else {
             // try every number from 3 -> sqrt(n)
             computation.appendComputationalStep(new ComputationalStep(String.format("try dividing all odd numbers from 3 to sqrt(%d)", number), ""));
@@ -54,7 +55,7 @@ public class PrimeServiceImpl implements PrimeService {
                     computation.appendComputationalStep(new ComputationalStep(String.format("try %d|%d", i, number), String.format("%d does not divide %d", i, number)));
                 } else {
                     computation.appendComputationalStep(new ComputationalStep(String.format("try %d|%d", i, number), String.format("%d divides %d", i, number)));
-                    computation.setResult(new ComputationalResult(false, String.format("%d is a composite number", number)));
+                    computation.setResult(new PrimeTestResult(false, number));
                     break;
                 }
                 i += 2;
@@ -72,7 +73,7 @@ public class PrimeServiceImpl implements PrimeService {
                 p += 2;
             }
 
-            while (!isNaturalNumberPrime(new NaturalNumber(p)).getResult().isResultIsLogicallyTrue()) {
+            while (!isNaturalNumberPrime(new NaturalNumber(p)).getResult().getResultIsLogicallyTrue()) {
                 p += 2;
             }
         } catch (NaturalNumberException ex) {
@@ -86,28 +87,28 @@ public class PrimeServiceImpl implements PrimeService {
     public Computation primeFactorsOfNaturalNumber(NaturalNumber n) {
         Computation computation = new Computation();
         int original = n.getNumberAsInteger();
+        PrimeFactorizationResult factorization = new PrimeFactorizationResult(original);
 
         if (n.getNumberAsInteger() == 1) {
-            computation.setResult(new ComputationalResult(true, "1"));
+            factorization.addPrimeFactor(1);
+            computation.setResult(factorization);
             return computation;
         }
 
-        String factorization = "";
-
         // start from n, and divide by primes until you get a prime
-        computation.appendComputationalStep(new ComputationalStep(String.format("divide %d by primes until the remainder is prime", n.getNumberAsInteger()), ""));
+        computation.appendComputationalStep(new ComputationalStep(String.format("divide %d by primes until the remainder is prime", original), ""));
 
         int prime = 2;
-        while (!isNaturalNumberPrime(n).getResult().isResultIsLogicallyTrue()) {
+        while (!isNaturalNumberPrime(n).getResult().getResultIsLogicallyTrue()) {
             computation.appendComputationalStep(new ComputationalStep(String.format("%d is not prime", n.getNumberAsInteger()), String.format("try %d|%d", prime, n.getNumberAsInteger())));
 
             // for each prime, collect # of times prime|n
             while (n.getNumberAsInteger() % prime == 0 && n.getNumberAsInteger() != prime) {
-                factorization = factorization + prime + "\u22C5";
+                factorization.addPrimeFactor(prime);
                 try {
                     int prev = n.getNumberAsInteger();
                     n = new NaturalNumber(n.getNumberAsInteger() / prime);
-                    computation.appendComputationalStep(new ComputationalStep(String.format("%d|%d", prime, prev), String.format("%d = %s%d", prev, factorization, n.getNumberAsInteger())));
+                    computation.appendComputationalStep(new ComputationalStep(String.format("%d|%d", prime, prev), String.format("%d = %s\u22C5%d", prev, factorization.getMessage().split("=")[1].trim(), n.getNumberAsInteger())));
                 } catch (NaturalNumberException ex) {
                     Logger.getLogger(PrimeServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -117,10 +118,9 @@ public class PrimeServiceImpl implements PrimeService {
         }
 
         // add remaining prime
-        factorization += n.getNumberAsInteger();
+        factorization.addPrimeFactor(n.getNumberAsInteger());
         computation.appendComputationalStep(new ComputationalStep("remainder is prime, stop", ""));
-
-        computation.setResult(new ComputationalResult(true, String.format("%d = %s", original, factorization)));
+        computation.setResult(factorization);
         return computation;
     }
 

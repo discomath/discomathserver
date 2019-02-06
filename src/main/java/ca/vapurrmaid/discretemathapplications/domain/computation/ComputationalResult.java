@@ -1,45 +1,32 @@
 package ca.vapurrmaid.discretemathapplications.domain.computation;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import lombok.Data;
-import lombok.NonNull;
-
 /**
  * Result of applying a {@link Computation} to a given set of inputs.
  *
  * @author vapurrmaid
  */
-@Data
-@JsonInclude(Include.NON_NULL)
-public final class ComputationalResult {
-
-    @NonNull
-    private final String message;
-
-    private final boolean resultIsLogicallyTrue;
+public interface ComputationalResult {
 
     /**
-     * Constructor.
+     * Human-friendly message containing the results of the computation. Message
+     * might be an equation, a description or an error message.
      *
-     * @param resultIsLogicallyTrue Indicates if the result of the computation
-     * is logically consistent with what the operation asks.
+     * @return message or equation describing result
      */
-    public ComputationalResult(final boolean resultIsLogicallyTrue) {
-        this.message = "";
-        this.resultIsLogicallyTrue = resultIsLogicallyTrue;
-    }
+    public String getMessage();
 
     /**
-     * Constructor.
+     * Indicates if the result of the computation is logically consistent with
+     * what the operation asks. For some operations, this may always be true.
      *
-     * @param resultIsLogicallyTrue Indicates if the result of the computation
-     * is logically consistent with what the operation asks.
-     * @param message The computed result itself or a description
+     * Example:
+     * <ul>
+     * <li>isNumberPrime(4): getResultIsLogicallyTrue() -> false</li>
+     * <li>isNumberPrime(3): getResultIsLogicallyTrue() -> true</li>
+     * </ul>
+     *
+     * @return true if and only if result is logically true
      */
-    public ComputationalResult(final boolean resultIsLogicallyTrue, final String message) {
-        this.message = message;
-        this.resultIsLogicallyTrue = resultIsLogicallyTrue;
-    }
+    public boolean getResultIsLogicallyTrue();
 
 }

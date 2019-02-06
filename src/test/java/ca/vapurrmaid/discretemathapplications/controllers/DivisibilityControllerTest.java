@@ -22,9 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-/**
- * @author vapurrmaid
- */
 @RunWith(SpringRunner.class)
 @WebMvcTest(DivisibilityController.class)
 public class DivisibilityControllerTest {
