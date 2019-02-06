@@ -27,8 +27,8 @@ public class PrimeFactorizationResult extends ComputationalResult {
     }
 
     /**
-     * Returns a tally, in a <code>HashMap<Integer, Integer></code> of each
-     * prime factor
+     * Returns a tally, in the form of a <code>HashMap<Integer, Integer></code>,
+     * of each prime factor.
      *
      * @return tally of prime factors
      */
