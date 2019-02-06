@@ -4,6 +4,7 @@ import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalResult;
 import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
+import ca.vapurrmaid.discretemathapplications.domain.computation.PrimeFactorizationResult;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,7 +89,7 @@ public class PrimeServiceImpl implements PrimeService {
         int original = n.getNumberAsInteger();
 
         if (n.getNumberAsInteger() == 1) {
-            computation.setResult(new ComputationalResult(true, "1"));
+            computation.setResult(new PrimeFactorizationResult(true, "1 = 1"));
             return computation;
         }
 
@@ -120,7 +121,7 @@ public class PrimeServiceImpl implements PrimeService {
         factorization += n.getNumberAsInteger();
         computation.appendComputationalStep(new ComputationalStep("remainder is prime, stop", ""));
 
-        computation.setResult(new ComputationalResult(true, String.format("%d = %s", original, factorization)));
+        computation.setResult(new PrimeFactorizationResult(true, String.format("%d = %s", original, factorization)));
         return computation;
     }
 

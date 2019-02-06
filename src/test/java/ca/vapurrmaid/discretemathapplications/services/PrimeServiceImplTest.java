@@ -57,7 +57,7 @@ public class PrimeServiceImplTest {
     @Test
     public void testPrimeFactorsOfNaturalNumber() throws NaturalNumberException {
         // test edge case - 1
-        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(1)).getResult().getMessage()).isEqualTo("1");
+        assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(1)).getResult().getMessage()).isEqualTo("1 = 1");
 
         // test 2, 3, 5 and multiples
         assertThat(primeService.primeFactorsOfNaturalNumber(new NaturalNumber(6)).getResult().getMessage()).isEqualTo("6 = 2\u22c53");

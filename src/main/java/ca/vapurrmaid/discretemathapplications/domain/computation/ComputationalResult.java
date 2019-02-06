@@ -25,7 +25,7 @@ public class ComputationalResult {
      * @param resultIsLogicallyTrue Indicates if the result of the computation
      * is logically consistent with what the operation asks.
      */
-    public ComputationalResult(final boolean resultIsLogicallyTrue) {
+    public ComputationalResult(boolean resultIsLogicallyTrue) {
         this.message = "";
         this.resultIsLogicallyTrue = resultIsLogicallyTrue;
     }
@@ -37,7 +37,7 @@ public class ComputationalResult {
      * is logically consistent with what the operation asks.
      * @param message The computed result itself or a description
      */
-    public ComputationalResult(final boolean resultIsLogicallyTrue, final String message) {
+    public ComputationalResult(boolean resultIsLogicallyTrue, @NonNull final String message) {
         this.message = message;
         this.resultIsLogicallyTrue = resultIsLogicallyTrue;
     }
