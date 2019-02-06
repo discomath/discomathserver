@@ -38,8 +38,10 @@ public class ComputationTest {
 
     @Test
     public void testGetAndSetResult() {
-//        computation.setResult(new ComputationalResult(true));
-//        assertThat(computation.getResult()).isEqualTo(new ComputationalResult(true));
+        computation.setResult(new DivisibilityResult(true, 2, 2));
+        assertThat(computation.getResult())
+                .as("check ComputatoinalResult is returned")
+                .isInstanceOf(ComputationalResult.class);
     }
 
 }

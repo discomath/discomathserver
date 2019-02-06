@@ -10,13 +10,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * @author Vapurrmaid
+ * @author vapurrmaid
  */
 @EqualsAndHashCode
 @RequiredArgsConstructor
 @ToString
 public class PrimeFactorizationResult implements ComputationalResult {
 
+    /**
+     * Returns a tally, in the form of <code>HashMap<Integer, Integer></code>,
+     * of each prime factor.
+     *
+     * @return prime tally
+     */
     @Getter
     private final Map<Integer, Integer> factors = new HashMap<>();
 
