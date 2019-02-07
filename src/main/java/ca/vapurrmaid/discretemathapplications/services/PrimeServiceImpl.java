@@ -8,10 +8,10 @@ import ca.vapurrmaid.discretemathapplications.domain.computation.PrimeFactorizat
 import ca.vapurrmaid.discretemathapplications.domain.computation.PrimeTestResult;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -153,13 +153,22 @@ public class PrimeServiceImpl implements PrimeService {
             factorizations.add((PrimeFactorizationResult) primeFactorsOfNaturalNumber(n).getResult());
         }
 
+        // add each factorization as a computational step
+        factorizations
+                .stream()
+                .map(f -> new ComputationalStep("Factors of " + f.getNumber(), f.getMessage().split("=")[1].trim()))
+                .forEachOrdered(computation::appendComputationalStep);
+
         // choose primes common to all factorizations - use lowest tally
-        Map<Integer, Integer> commonFactors = (HashMap<Integer, Integer>) factorizations.remove(0).getFactors();
-        
+        computation.appendComputationalStep(new ComputationalStep("Choose primes common to each factorization, at their lowest exponent", ""));
+        Map<Integer, Integer> commonFactors = new ConcurrentSkipListMap<>();
+        factorizations.remove(0).getFactors().forEach(commonFactors::put);
+
         Iterator<PrimeFactorizationResult> it = factorizations.iterator();
         while (it.hasNext()) {
-            HashMap<Integer, Integer> currentFactorization = (HashMap<Integer, Integer>) it.next().getFactors();
-            for (Integer commonPrimeFactor : commonFactors.keySet()) {
+            ConcurrentSkipListMap<Integer, Integer> currentFactorization = new ConcurrentSkipListMap<>();
+            it.next().getFactors().forEach(currentFactorization::put);
+            commonFactors.keySet().forEach(commonPrimeFactor -> {
                 if (currentFactorization.containsKey(commonPrimeFactor)) {
                     if (commonFactors.get(commonPrimeFactor) > currentFactorization.get(commonPrimeFactor)) {
                         commonFactors.put(commonPrimeFactor, currentFactorization.get(commonPrimeFactor));
@@ -167,15 +176,30 @@ public class PrimeServiceImpl implements PrimeService {
                 } else {
                     commonFactors.remove(commonPrimeFactor);
                 }
-            }
-        }
-        
-        // now compute the product
-        int product = 1;
-        for (Integer k : commonFactors.keySet()) {
-            product *= (Math.pow(k, commonFactors.get(k)));
+            });
         }
 
+        String commonFactorsString = commonFactors
+                .entrySet()
+                .stream()
+                .map(entry -> String.format("%d^%d", entry.getKey(), entry.getValue()))
+                .reduce("", (x, y) -> x + y + ",");
+
+        if (commonFactorsString.equals("")) {
+            commonFactorsString = "1";
+        } else {
+            commonFactorsString = commonFactorsString.substring(0, commonFactorsString.length() - 1); // remove last ','
+        }
+
+        // now compute the product
+        int product = commonFactors
+                .entrySet()
+                .stream()
+                .map(entry -> Math.pow(entry.getKey(), entry.getValue()))
+                .mapToInt(value -> value.intValue())
+                .reduce(1, (x, y) -> x * y);
+
+        computation.appendComputationalStep(new ComputationalStep("Compute Product of common factors", String.format("%d = %s", product, commonFactorsString)));
         computation.setResult(new GCFResult(numbers, product));
         return computation;
     }
