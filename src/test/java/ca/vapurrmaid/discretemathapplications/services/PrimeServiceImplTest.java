@@ -83,11 +83,32 @@ public class PrimeServiceImplTest {
         }
     }
 
-//    @Test
-//    public void testComputeGCFfromPrimeFactorization() {
-//        fail("The test case is a prototype.");
-//    }
-//
+    @Test
+    public void testComputeGCFfromPrimeFactorization() throws NaturalNumberException {
+        // test same number
+        ComputationalResult res = primeService.computeGCFfromPrimeFactorization(new NaturalNumber(1), new NaturalNumber(1)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 GCF(1,1) = 1");
+
+        res = primeService.computeGCFfromPrimeFactorization(new NaturalNumber(5), new NaturalNumber(5), new NaturalNumber(5)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 GCF(5,5,5) = 5");
+
+        // test numbers that has GCF > 1
+        res = primeService.computeGCFfromPrimeFactorization(new NaturalNumber(3), new NaturalNumber(9)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 GCF(3,9) = 3");
+
+        res = primeService.computeGCFfromPrimeFactorization(new NaturalNumber(8), new NaturalNumber(12), new NaturalNumber(40), new NaturalNumber(400)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 GCF(8,12,40,400) = 4");
+
+        // test numbers where GCF = 1
+        res = primeService.computeGCFfromPrimeFactorization(new NaturalNumber(8), new NaturalNumber(9), new NaturalNumber(10)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 GCF(8,9,10) = 1");
+    }
+
 //    @Test
 //    public void testComputeLCMfromPrimeFactorization() {
 //        fail("The test case is a prototype.");
