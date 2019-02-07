@@ -1,9 +1,9 @@
 package ca.vapurrmaid.discretemathapplications.domain.computation;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +18,13 @@ import lombok.ToString;
 public class PrimeFactorizationResult implements ComputationalResult {
 
     /**
-     * Returns a tally, in the form of <code>HashMap<Integer, Integer></code>,
+     * Returns a tally, in the form of <code>TreeMap<Integer, Integer></code>,
      * of each prime factor.
      *
      * @return prime tally
      */
     @Getter
-    private final Map<Integer, Integer> factors = new HashMap<>();
+    private final Map<Integer, Integer> factors = new TreeMap<>();
 
     @Getter
     private final int number;

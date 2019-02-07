@@ -89,7 +89,7 @@ public class PrimeServiceImpl implements PrimeService {
         int original = n.getNumberAsInteger();
         PrimeFactorizationResult factorization = new PrimeFactorizationResult(original);
 
-        if (n.getNumberAsInteger() == 1) {
+        if (original == 1) {
             factorization.addPrimeFactor(1);
             computation.setResult(factorization);
             return computation;
