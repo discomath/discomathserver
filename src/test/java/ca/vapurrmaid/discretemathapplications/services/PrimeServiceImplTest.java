@@ -70,7 +70,12 @@ public class PrimeServiceImplTest {
         // advanced case - 3 different factors, one repeating, one with multiple digits
         res = primeService.primeFactorsOfNaturalNumber(new NaturalNumber(220)).getResult();
         assertThat(res.getResultIsLogicallyTrue()).isTrue();
-        assertThat(res.getMessage()).isEqualTo("\u2234 220 = 2\u22c52\u22c55\u22c511");
+        assertThat(res.getMessage()).isEqualTo("\u2234 220 = 2\u22c52\u22C55\u22C511");
+
+        // Issue #7 https://github.com/discomath/discomathserver/issues/7 - Test Message Ordering
+        res = primeService.primeFactorsOfNaturalNumber(new NaturalNumber(1589)).getResult();
+        assertThat(res.getResultIsLogicallyTrue()).isTrue();
+        assertThat(res.getMessage()).isEqualTo("\u2234 1589 = 7\u22C5227");
 
         // test primes yield themselves
         for (int p : first100Primes) {
