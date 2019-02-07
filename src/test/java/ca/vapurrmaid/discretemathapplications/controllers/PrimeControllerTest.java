@@ -71,4 +71,71 @@ public class PrimeControllerTest {
         assertThat(res.getContentAsString()).isEqualTo(json.write(c).getJson());
     }
 
+    @Test
+    public void GCFTest() throws Exception {
+        // given
+        Computation c = new Computation();
+        given(primeService.computeGCFfromPrimeFactorization(three, three))
+                .willReturn(c);
+
+        // when - 2 params
+        MockHttpServletResponse res = mvc.perform(
+                get("/api/applications/prime-numbers/gcf")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .param("n1", "" + three.getNumberAsInteger())
+                        .param("n2", "" + three.getNumberAsInteger())
+                        .param("n", "")
+        )
+                .andReturn()
+                .getResponse();
+
+        // then
+        assertThat(res.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(res.getContentAsString()).isEqualTo(json.write(c).getJson());
+
+        // given - 3-8 params
+        c = new Computation();
+        given(primeService.computeGCFfromPrimeFactorization(three, three, three, three, three))
+                .willReturn(c);
+        // when
+        res = mvc.perform(
+                get("/api/applications/prime-numbers/gcf")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .param("n1", "" + three.getNumberAsInteger())
+                        .param("n2", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+        )
+                .andReturn()
+                .getResponse();
+
+        // then
+        assertThat(res.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(res.getContentAsString()).isEqualTo(json.write(c).getJson());
+
+        // given >8 params
+        res = mvc.perform(
+                get("/api/applications/prime-numbers/gcf")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .param("n1", "" + three.getNumberAsInteger())
+                        .param("n2", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+                        .param("n", "" + three.getNumberAsInteger())
+        )
+                .andReturn()
+                .getResponse();
+
+        // then
+        assertThat(res.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(res.getContentAsString()).isEqualTo("Supplied 9 'n' parameters. Only excepts up to 8.");
+    }
+
 }

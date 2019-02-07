@@ -29,10 +29,12 @@ public interface PrimeService {
     /**
      * Computes the GCF of the given numbers.
      *
-     * @param n A {@link NaturalNumber} is a positive Integer greater than 0.
+     * @param n1 A {@link NaturalNumber} is a positive Integer greater than 0.
+     * @param n2 A {@link NaturalNumber} is a positive Integer greater than 0.
+     * @param nums A {@link NaturalNumber} is a positive Integer greater than 0.
      * @return A {@link Computation} object with the GCF.
      */
-    Computation computeGCFfromPrimeFactorization(NaturalNumber... n);
+    Computation computeGCFfromPrimeFactorization(NaturalNumber n1, NaturalNumber n2, NaturalNumber... nums);
 
     /**
      * Computes the LCM of the given numbers.

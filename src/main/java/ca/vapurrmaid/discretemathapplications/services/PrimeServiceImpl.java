@@ -3,9 +3,15 @@ package ca.vapurrmaid.discretemathapplications.services;
 import ca.vapurrmaid.discretemathapplications.domain.computation.Computation;
 import ca.vapurrmaid.discretemathapplications.domain.computation.ComputationalStep;
 import ca.vapurrmaid.discretemathapplications.domain.NaturalNumber;
+import ca.vapurrmaid.discretemathapplications.domain.computation.GCFResult;
 import ca.vapurrmaid.discretemathapplications.domain.computation.PrimeFactorizationResult;
 import ca.vapurrmaid.discretemathapplications.domain.computation.PrimeTestResult;
 import ca.vapurrmaid.discretemathapplications.error.NaturalNumberException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -125,8 +131,80 @@ public class PrimeServiceImpl implements PrimeService {
     }
 
     @Override
-    public Computation computeGCFfromPrimeFactorization(NaturalNumber... n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Computation computeGCFfromPrimeFactorization(NaturalNumber n1, NaturalNumber n2, NaturalNumber... nums) {
+        Computation computation = new Computation();
+
+        // numbers - the list of numbers being compared
+        int[] numbers = new int[2 + nums.length];
+        numbers[0] = n1.getNumberAsInteger();
+        numbers[1] = n2.getNumberAsInteger();
+
+        // factorizations - prime factorization of each number
+        computation.appendComputationalStep(new ComputationalStep("Obtain prime factorization of each number", ""));
+        List<PrimeFactorizationResult> factorizations = new ArrayList<>();
+        factorizations.add((PrimeFactorizationResult) primeFactorsOfNaturalNumber(n1).getResult());
+        factorizations.add((PrimeFactorizationResult) primeFactorsOfNaturalNumber(n2).getResult());
+
+        // process vararg
+        int index = 2;
+        for (NaturalNumber n : nums) {
+            numbers[index] = n.getNumberAsInteger();
+            index++;
+            factorizations.add((PrimeFactorizationResult) primeFactorsOfNaturalNumber(n).getResult());
+        }
+
+        // add each factorization as a computational step
+        factorizations
+                .stream()
+                .map(f -> new ComputationalStep("Factors of " + f.getNumber(), f.getMessage().split("=")[1].trim()))
+                .forEachOrdered(computation::appendComputationalStep);
+
+        // choose primes common to all factorizations - use lowest tally
+        computation.appendComputationalStep(new ComputationalStep("Choose primes common to each factorization, at their lowest exponent", ""));
+        Map<Integer, Integer> commonFactors = new ConcurrentSkipListMap<>();
+        factorizations.remove(0).getFactors().forEach(commonFactors::put);
+
+        Iterator<PrimeFactorizationResult> it = factorizations.iterator();
+        while (it.hasNext()) {
+            // iterate each prime factorization, compare against common factors of previous iterations
+            ConcurrentSkipListMap<Integer, Integer> currentFactorization = new ConcurrentSkipListMap<>();
+            it.next().getFactors().forEach(currentFactorization::put);
+
+            // for common factors, keep the lowest
+            commonFactors.keySet().forEach(commonPrimeFactor -> {
+                if (currentFactorization.containsKey(commonPrimeFactor)) {
+                    if (commonFactors.get(commonPrimeFactor) > currentFactorization.get(commonPrimeFactor)) {
+                        commonFactors.put(commonPrimeFactor, currentFactorization.get(commonPrimeFactor));
+                    }
+                } else { // if not present, it's no longer common: remov
+                    commonFactors.remove(commonPrimeFactor);
+                }
+            });
+        }
+
+        String commonFactorsString = commonFactors
+                .entrySet()
+                .stream()
+                .map(entry -> String.format("%d^%d", entry.getKey(), entry.getValue()))
+                .reduce("", (x, y) -> x + y + ",");
+
+        if (commonFactorsString.equals("")) {
+            commonFactorsString = "1";
+        } else {
+            commonFactorsString = commonFactorsString.substring(0, commonFactorsString.length() - 1); // remove last ','
+        }
+
+        // now compute the product
+        int product = commonFactors
+                .entrySet()
+                .stream()
+                .map(entry -> Math.pow(entry.getKey(), entry.getValue()))
+                .mapToInt(value -> value.intValue())
+                .reduce(1, (x, y) -> x * y);
+
+        computation.appendComputationalStep(new ComputationalStep("Compute Product of common factors", String.format("%d = %s", product, commonFactorsString)));
+        computation.setResult(new GCFResult(numbers, product));
+        return computation;
     }
 
     @Override
