@@ -166,14 +166,17 @@ public class PrimeServiceImpl implements PrimeService {
 
         Iterator<PrimeFactorizationResult> it = factorizations.iterator();
         while (it.hasNext()) {
+            // iterate each prime factorization, compare against common factors of previous iterations
             ConcurrentSkipListMap<Integer, Integer> currentFactorization = new ConcurrentSkipListMap<>();
             it.next().getFactors().forEach(currentFactorization::put);
+
+            // for common factors, keep the lowest
             commonFactors.keySet().forEach(commonPrimeFactor -> {
                 if (currentFactorization.containsKey(commonPrimeFactor)) {
                     if (commonFactors.get(commonPrimeFactor) > currentFactorization.get(commonPrimeFactor)) {
                         commonFactors.put(commonPrimeFactor, currentFactorization.get(commonPrimeFactor));
                     }
-                } else {
+                } else { // if not present, it's no longer common: remov
                     commonFactors.remove(commonPrimeFactor);
                 }
             });
