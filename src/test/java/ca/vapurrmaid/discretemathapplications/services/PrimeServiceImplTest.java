@@ -12,8 +12,7 @@ import org.junit.Before;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- *
- * @author Vapurrmaid
+ * @author vapurrmaid
  */
 public class PrimeServiceImplTest {
 
